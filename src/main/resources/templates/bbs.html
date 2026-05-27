@@ -6,7 +6,22 @@
 </head>
 <body>
 <h2>掲示板アプリ</h2>
-
+<form th:action="@{/article/insert-article}" method="post" style="padding-bottom: 10px; border-bottom: 1px solid black">
+    <div>
+        <label>
+            投稿者名
+        </label>
+        <input type="text" name="name"/>
+    </div>
+    <div>
+        <label>
+            投稿者名
+        </label>
+        <textarea rows="5" cols="7" name="content">
+       </textarea>
+    </div>
+    <button>記事投稿</button>
+</form>
 <div style="padding-bottom: 10px; border-bottom: 1px solid black" th:each=" article : ${application.articleList}">
     <p>投稿者名: <span th:text="${article.name}">dummy</span></p>
     <p>投稿内容</p>
