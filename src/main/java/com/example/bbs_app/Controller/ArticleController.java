@@ -3,7 +3,9 @@ package com.example.bbs_app.Controller;
 
 import com.example.bbs_app.Form.ArticleForm;
 import com.example.bbs_app.Repository.ArticleRepository;
+import com.example.bbs_app.Repository.CommentRepository;
 import com.example.bbs_app.domain.Article;
+import com.example.bbs_app.domain.Comment;
 import jakarta.servlet.ServletContext;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private CommentRepository commentRepository;
+
     /**
      * 初期表示.
      *
@@ -35,6 +40,10 @@ public class ArticleController {
     @GetMapping("")
     public String index() {
         List<Article> articleList = articleRepository.findAll();
+        for (Article article : articleList) {
+            List<Comment> commentList = commentRepository.findByArticle(article.getId());
+            article.setCommentList(commentList);
+        }
         application.setAttribute("articleList", articleList);
         return "bbs";
     }
