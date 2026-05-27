@@ -1,12 +1,15 @@
 package com.example.bbs_app.Controller;
 
 
+import com.example.bbs_app.Form.ArticleForm;
 import com.example.bbs_app.Repository.ArticleRepository;
 import com.example.bbs_app.domain.Article;
 import jakarta.servlet.ServletContext;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -35,5 +38,19 @@ public class ArticleController {
         application.setAttribute("articleList", articleList);
         return "bbs";
     }
+
+    /**
+     * 投稿を追加.
+     *
+     * @return 掲示板の画面
+     */
+    @PostMapping("/insert-article")
+    public String index(ArticleForm form) {
+        ModelMapper modelMapper = new ModelMapper();
+        Article article = modelMapper.map(form, Article.class);
+        articleRepository.insert(article);
+        return "redirect:/article";
+    }
+
 
 }
