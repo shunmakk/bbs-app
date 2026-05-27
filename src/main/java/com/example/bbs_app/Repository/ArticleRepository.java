@@ -4,7 +4,9 @@ package com.example.bbs_app.Repository;
 import com.example.bbs_app.domain.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -44,6 +46,20 @@ public class ArticleRepository {
                 ORDER BY id DESC;
                 """;
         return template.query(sql, ARTICLE_ROW_MAPPER);
+    }
+
+    /**
+     * 投稿内容をデータベースに挿入.
+     *
+     * @param article 記事ドメイン
+     */
+    public void insert(Article article) {
+        SqlParameterSource param = new BeanPropertySqlParameterSource(article);
+        String sql = """
+                 INSERT INTO articles (name, content) VALUES (name,content);
+                """;
+        template.update(sql, param);
+        System.out.println("記事の追加に成功しました");
     }
 
 
