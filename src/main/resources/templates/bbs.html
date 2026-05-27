@@ -32,6 +32,23 @@
             <span th:text="${comment.content}">コメント内容</span>
         </li>
     </ul>
+    <form th:action="@{/article/insert-comment}" method="post">
+        <input name="articleId" th:value="${article.id}" hidden="hidden"/>
+        <div>
+            <label>
+                名前
+            </label>
+            <input type="text" name="name"/>
+        </div>
+        <div>
+            <label>
+                コメント
+            </label>
+            <textarea rows="5" cols="7" name="content">
+       </textarea>
+            <button>コメント投稿</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>
