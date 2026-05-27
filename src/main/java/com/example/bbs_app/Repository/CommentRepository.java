@@ -5,6 +5,7 @@ import com.example.bbs_app.domain.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -54,5 +55,18 @@ public class CommentRepository {
             System.out.println("指定したidからコメントを取得することができませんでした");
             return null;
         }
+    }
+
+    /**
+     * コメントをデータベースに挿入.
+     *
+     * @param comment コメントドメイン
+     */
+    public void insert(Comment comment) {
+        SqlParameterSource param = new BeanPropertySqlParameterSource(comment);
+        String sql = """
+                 INSERT INTO comments (name, content,article_id) VALUES (:name,:content,:articleId);
+                """;
+        template.update(sql, param);
     }
 }
