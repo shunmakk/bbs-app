@@ -1,7 +1,7 @@
 package com.example.bbs_app.Form;
 
 /**
- * 記事投稿のフォームクラス
+ * 記事投稿のフォームクラス.
  */
 public class ArticleForm {
     /**

@@ -2,6 +2,7 @@ package com.example.bbs_app.Controller;
 
 
 import com.example.bbs_app.Form.ArticleForm;
+import com.example.bbs_app.Form.CommentForm;
 import com.example.bbs_app.Repository.ArticleRepository;
 import com.example.bbs_app.Repository.CommentRepository;
 import com.example.bbs_app.domain.Article;
@@ -54,10 +55,23 @@ public class ArticleController {
      * @return 掲示板の画面
      */
     @PostMapping("/insert-article")
-    public String index(ArticleForm form) {
+    public String insertArticle(ArticleForm form) {
         ModelMapper modelMapper = new ModelMapper();
         Article article = modelMapper.map(form, Article.class);
         articleRepository.insert(article);
+        return "redirect:/article";
+    }
+
+    /**
+     * コメントを追加.
+     *
+     * @return 掲示板の画面
+     */
+    @PostMapping("/insert-comment")
+    public String insertComment(CommentForm form) {
+        ModelMapper modelMapper = new ModelMapper();
+        Comment comment = modelMapper.map(form, Comment.class);
+        commentRepository.insert(comment);
         return "redirect:/article";
     }
 
