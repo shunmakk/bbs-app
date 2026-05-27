@@ -29,7 +29,7 @@ public class ArticleController {
      *
      * @return 掲示板の画面
      */
-    @GetMapping("/")
+    @GetMapping("")
     public String index() {
         List<Article> articleList = articleRepository.findAll();
         application.setAttribute("articleList", articleList);
