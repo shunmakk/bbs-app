@@ -17,7 +17,7 @@ public class Article {
     /**
      * 記事内容
      */
-    private String comment;
+    private String content;
     /**
      * コメント一覧
      */
@@ -39,12 +39,12 @@ public class Article {
         this.name = name;
     }
 
-    public String getComment() {
-        return comment;
+    public String getContent() {
+        return content;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public List<Comment> getCommentList() {
@@ -60,7 +60,7 @@ public class Article {
         return "Article{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", comment='" + comment + '\'' +
+                ", content='" + content + '\'' +
                 ", commentList=" + commentList +
                 '}';
     }
