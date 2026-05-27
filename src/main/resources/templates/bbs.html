@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>掲示板アプリ</h2>
+
+<div style="padding-bottom: 10px; border-bottom: 1px solid black" th:each=" article : ${application.articleList}">
+    <p>投稿者名: <span th:text="${article.name}">dummy</span></p>
+    <p>投稿内容</p>
+    <p th:text="${article.content}">dummy</p>
+</div>
+</body>
+</html>
