@@ -8,6 +8,6 @@ spring:
     password: postgres
     jmx:
       default-domain: bbs-app
-  server:
-    servlet:
-      context-path: /bbs-app
+server:
+  servlet:
+    context-path: /bbs-app
