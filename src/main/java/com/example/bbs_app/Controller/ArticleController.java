@@ -40,11 +40,6 @@ public class ArticleController {
      */
     @GetMapping("")
     public String index() {
-//        List<Article> articleList = articleRepository.findAll();
-//        for (Article article : articleList) {
-//            List<Comment> commentList = commentRepository.findByArticle(article.getId());
-//            article.setCommentList(commentList);
-//        }
         List<Article> articleList = articleRepository.findAllArticleAndComment();
         application.setAttribute("articleList", articleList);
         return "bbs";
