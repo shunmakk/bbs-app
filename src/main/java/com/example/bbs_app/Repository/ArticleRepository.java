@@ -68,7 +68,7 @@ public class ArticleRepository {
      *
      * @param id 記事id
      */
-    public void deletedByArticleId(int id) {
+    public void deletedById(int id) {
         String sql = """
                 DELETE FROM articles WHERE id =:id;
                 """;
