@@ -69,4 +69,18 @@ public class CommentRepository {
                 """;
         template.update(sql, param);
     }
+
+    /**
+     * 指定された記事idを基にコメントをテーブルから削除します.
+     *
+     * @param articleId 記事id
+     */
+    public void deletedByArticleId(int articleId) {
+        String sql = """
+                DELETE FROM articles WHERE article_id =:articleId;
+                """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);
+        template.update(sql, param);
+        System.out.println("指定されたidを基にコメント削除することに成功しました");
+    }
 }
