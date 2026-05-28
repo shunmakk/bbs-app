@@ -68,9 +68,9 @@ public class ArticleRepository {
      *
      * @param id 記事id
      */
-    public void deletedById(int id) {
+    public void deletedById(Integer id) {
         String sql = """
-                DELETE FROM articles WHERE id =:id;
+                DELETE FROM articles WHERE id = :id;
                 """;
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
         template.update(sql, param);
