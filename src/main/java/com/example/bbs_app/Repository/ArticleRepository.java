@@ -5,6 +5,7 @@ import com.example.bbs_app.domain.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -60,6 +61,20 @@ public class ArticleRepository {
                 """;
         template.update(sql, param);
         System.out.println("記事の追加に成功しました");
+    }
+
+    /**
+     * 指定されたidを基に投稿内容をテーブルから削除します.
+     *
+     * @param id 記事id
+     */
+    public void deletedByArticleId(int id) {
+        String sql = """
+                DELETE FROM articles WHERE id =:id;
+                """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+        template.update(sql, param);
+        System.out.println("指定されたidを基に記事削除することに成功しました");
     }
 
 
