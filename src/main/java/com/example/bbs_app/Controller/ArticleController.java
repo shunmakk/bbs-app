@@ -52,7 +52,7 @@ public class ArticleController {
     /**
      * 投稿を追加.
      *
-     * @return 掲示板の画面
+     * @return 掲示板の画面にリダイレクト
      */
     @PostMapping("/insert-article")
     public String insertArticle(ArticleForm form) {
@@ -65,13 +65,25 @@ public class ArticleController {
     /**
      * コメントを追加.
      *
-     * @return 掲示板の画面
+     * @return 掲示板の画面の画面にリダイレクト
      */
     @PostMapping("/insert-comment")
     public String insertComment(CommentForm form) {
         ModelMapper modelMapper = new ModelMapper();
         Comment comment = modelMapper.map(form, Comment.class);
         commentRepository.insert(comment);
+        return "redirect:/article";
+    }
+
+    /**
+     * 投稿とコメントの削除.
+     *
+     * @return 掲示板の画面の画面にリダイレクト
+     */
+    @PostMapping("/delete-article/")
+    public String deleteArticle(Integer id) {
+        commentRepository.deletedByArticleId(id);
+        articleRepository.deletedById(id);
         return "redirect:/article";
     }
 
