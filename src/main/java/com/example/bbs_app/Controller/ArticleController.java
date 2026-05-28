@@ -78,8 +78,7 @@ public class ArticleController {
      */
     @PostMapping("/delete-article/")
     public String deleteArticle(Integer id) {
-        commentRepository.deletedByArticleId(id);
-        articleRepository.deletedById(id);
+        articleRepository.deleteEverything(id);
         return "redirect:/article";
     }
 

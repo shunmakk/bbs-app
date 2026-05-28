@@ -98,20 +98,22 @@ public class ArticleRepository {
         template.update(sql, param);
         System.out.println("記事の追加に成功しました");
     }
+    
 
     /**
-     * 指定されたidを基に投稿内容をテーブルから削除します.
+     * 指定された記事idを基に投稿とコメントをテーブルから削除します.
      *
      * @param id 記事id
      */
-    public void deletedById(Integer id) {
+    public void deleteEverything(Integer id) {
         String sql = """
+                DELETE FROM comments WHERE article_id = :id;
                 DELETE FROM articles WHERE id = :id;
                 """;
-        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-        template.update(sql, param);
-        System.out.println("指定されたidを基に記事削除することに成功しました");
-    }
 
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+
+        template.update(sql, param);
+    }
 
 }

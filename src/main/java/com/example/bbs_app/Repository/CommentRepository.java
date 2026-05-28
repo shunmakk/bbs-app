@@ -4,7 +4,6 @@ package com.example.bbs_app.Repository;
 import com.example.bbs_app.domain.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -30,17 +29,4 @@ public class CommentRepository {
         template.update(sql, param);
     }
 
-    /**
-     * 指定された記事idを基にコメントをテーブルから削除します.
-     *
-     * @param articleId 記事id
-     */
-    public void deletedByArticleId(Integer articleId) {
-        String sql = """
-                DELETE FROM comments WHERE article_id = :articleId;
-                """;
-        SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);
-        template.update(sql, param);
-        System.out.println("指定されたidを基にコメント削除することに成功しました");
-    }
 }
