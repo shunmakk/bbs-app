@@ -22,32 +22,33 @@
     </div>
     <button>記事投稿</button>
 </form>
-<div style="padding-bottom: 10px; border-bottom: 1px solid black" th:each=" article : ${application.articleList}">
+<div style="padding-bottom: 10px; border-bottom: 1px solid black" th:each="article : ${application.articleList}">
     <p>投稿者名: <span th:text="${article.name}">dummy</span></p>
     <p>投稿内容</p>
     <p th:text="${article.content}">dummy</p>
+
+    <form th:action="@{/article/delete-article/}" method="post">
+        <input type="hidden" name="id" th:value="${article.id}"/>
+        <button type="submit">記事削除</button>
+    </form>
     <ul>
         <li th:each="comment : ${article.commentList}">
             <span th:text="${comment.name}">コメント者</span> :
             <span th:text="${comment.content}">コメント内容</span>
         </li>
     </ul>
+
     <form th:action="@{/article/insert-comment}" method="post">
-        <input name="articleId" th:value="${article.id}" hidden="hidden"/>
+        <input type="hidden" name="articleId" th:value="${article.id}"/>
         <div>
-            <label>
-                名前
-            </label>
+            <label>名前</label>
             <input type="text" name="name"/>
         </div>
         <div>
-            <label>
-                コメント
-            </label>
-            <textarea rows="5" cols="7" name="content">
-       </textarea>
-            <button>コメント投稿</button>
+            <label>コメント</label>
+            <textarea rows="5" cols="7" name="content"></textarea>
         </div>
+        <button type="submit">コメント投稿</button>
     </form>
 </div>
 </body>
