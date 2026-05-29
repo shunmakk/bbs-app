@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <h2>掲示板アプリ</h2>
-<form th:action="@{/article/insert-article}" method="post" style="padding-bottom: 10px; border-bottom: 1px solid black">
+<form th:object="${articleForm}" th:action="@{/article/insert-article}" method="post"
+      style="padding-bottom: 10px; border-bottom: 1px solid black">
     <div>
         <label>
             投稿者名
         </label>
-        <input type="text" name="name"/>
+        <input type="text" name="name" th:field="*{name}"/>
+        <p th:errors="*{name}" class="error">エラー！</p>
     </div>
     <div>
         <label>
-            投稿者名
+            投稿内容
         </label>
-        <textarea rows="5" cols="7" name="content">
-       </textarea>
+        <textarea rows="5" cols="7" name="content" th:field="*{content}"></textarea>
+        <p th:errors="*{content}" class="error">エラー！</p>
     </div>
     <button>記事投稿</button>
 </form>
-<div style="padding-bottom: 10px; border-bottom: 1px solid black" th:each="article : ${application.articleList}">
+
+<div style="padding-bottom: 10px; border-bottom: 1px solid black" th:each="article : ${articleList}">
     <p>投稿者名: <span th:text="${article.name}">dummy</span></p>
     <p>投稿内容</p>
     <p th:text="${article.content}">dummy</p>
@@ -38,15 +46,17 @@
         </li>
     </ul>
 
-    <form th:action="@{/article/insert-comment}" method="post">
+    <form th:object="${commentForm}" th:action="@{/article/insert-comment}" method="post">
         <input type="hidden" name="articleId" th:value="${article.id}"/>
         <div>
             <label>名前</label>
-            <input type="text" name="name"/>
+            <input type="text" name="name" th:field="*{name}"/>
+            <p th:if="${articleId == article.id}" th:errors="*{name}" class="error">エラー！</p>
         </div>
         <div>
             <label>コメント</label>
-            <textarea rows="5" cols="7" name="content"></textarea>
+            <textarea rows="5" cols="7" name="content" th:field="*{content}"></textarea>
+            <p th:if="${articleId == article.id}" th:errors="*{content}" class="error">エラー！</p>
         </div>
         <button type="submit">コメント投稿</button>
     </form>
