@@ -7,10 +7,12 @@ import com.example.bbs_app.Repository.ArticleRepository;
 import com.example.bbs_app.Repository.CommentRepository;
 import com.example.bbs_app.domain.Article;
 import com.example.bbs_app.domain.Comment;
-import jakarta.servlet.ServletContext;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +26,6 @@ import java.util.List;
 @RequestMapping("/article")
 public class ArticleController {
 
-    @Autowired
-    private ServletContext application;
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -39,37 +39,45 @@ public class ArticleController {
      * @return 掲示板の画面
      */
     @GetMapping("")
-    public String index() {
+    public String index(Model model, ArticleForm articleForm, CommentForm commentForm) {
         List<Article> articleList = articleRepository.findAllArticleAndComment();
-        application.setAttribute("articleList", articleList);
+        model.addAttribute("articleList", articleList);
         return "bbs";
     }
 
     /**
      * 投稿を追加.
-     *
-     * @return 掲示板の画面にリダイレクト
      */
     @PostMapping("/insert-article")
-    public String insertArticle(ArticleForm form) {
+    public String insertArticle(@Validated ArticleForm articleForm, BindingResult result, CommentForm commentForm, Model model) {
+        if (result.hasErrors()) {
+            return index(model, articleForm, commentForm);
+        }
+
         ModelMapper modelMapper = new ModelMapper();
-        Article article = modelMapper.map(form, Article.class);
+        Article article = modelMapper.map(articleForm, Article.class);
         articleRepository.insert(article);
         return "redirect:/article";
     }
 
     /**
      * コメントを追加.
-     *
-     * @return 掲示板の画面の画面にリダイレクト
      */
     @PostMapping("/insert-comment")
-    public String insertComment(CommentForm form) {
+    public String insertComment(@Validated CommentForm commentForm, BindingResult result, ArticleForm articleForm, Model model) {
+        String articleId = commentForm.getArticleId();
+        int a = Integer.parseInt(articleId);
+        model.addAttribute("articleId", a);
+        if (result.hasErrors()) {
+            return index(model, articleForm, commentForm);
+        }
+
         ModelMapper modelMapper = new ModelMapper();
-        Comment comment = modelMapper.map(form, Comment.class);
+        Comment comment = modelMapper.map(commentForm, Comment.class);
         commentRepository.insert(comment);
         return "redirect:/article";
     }
+
 
     /**
      * 投稿とコメントの削除.
